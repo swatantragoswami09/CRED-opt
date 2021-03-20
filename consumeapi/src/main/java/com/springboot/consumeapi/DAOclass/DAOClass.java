@@ -1,7 +1,9 @@
-package DAOclass;
+package com.springboot.consumeapi.DAOclass;
 
 import java.net.URI;
 import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
 //import javax.transaction.Transactional;
 
@@ -23,7 +25,6 @@ import org.springframework.web.client.RestTemplate;
 //import com.springboot.consumeapi.bean.Employee;
 
 @Repository
-@Component
 public class DAOClass implements DAOClassImp {
 
 	@Override
@@ -39,14 +40,18 @@ public class DAOClass implements DAOClassImp {
 		
 		RequestEntity<String> request = new RequestEntity<>(header, HttpMethod.GET,url);
 		ResponseEntity<String> response = restTemplate.exchange(request,  String.class);
-		String rawJson= response.getBody();
+		
+		String rawJson= response.getBody();//
+		System.out.println(rawJson);
 		JSONObject root = new JSONObject(rawJson);
+//		System.out.println(root.toString());
 		JSONArray e=root.getJSONArray("result");
+////		System.out.println(e);
 		for(int i=0;i<e.length();i++)
 		{
 			JSONObject json= e.getJSONObject(i);
-			String fr=(String) json.get("number");
-			System.out.println(fr);
+//			String fr=(String) json.get("number");
+			System.out.println("number: "+(String) json.get("number")+", "+"task_effective_number: "+(String) json.get("task_effective_number"));
 		}
 //		return "";
 //		Employee emp1=JsonUtil.convertJsonToJava(rawJson , Employee.class);
@@ -126,7 +131,7 @@ public class DAOClass implements DAOClassImp {
 	}
 
 	@Override
-	public String update(String theEmployee) throws JSONException {
+	public String update(Map<String, Object> theEmployee) throws JSONException {
 		
 		URI url=URI.create("https://dev59463.service-now.com/api/now/table/problem");
 		RestTemplate restTemplate = new RestTemplate();
@@ -141,16 +146,22 @@ public class DAOClass implements DAOClassImp {
 		ResponseEntity<String> response = restTemplate.exchange(request,  String.class);
 
 		String rawJson = response.getBody();  //return JSON string
+		System.out.println(rawJson);
+//		JSONObject root = new JSONObject(rawJson);
 		
-		JSONObject root = new JSONObject(rawJson);
-		root.put("Test", theEmployee);
-		System.out.println(root);
+//		JSONArray list=root.getJSONArray("result");
+
+//		list.put("Test", theEmployee);
+//		list.put(theEmployee);
+//		System.out.println(list);
+//		for(int i=0;i<list.length();i++) {
+//			
+//		}
+//		
+//		JSONArray result = root.getJSONArray("result");// result value that is list
+//		System.out.println(result);
 		
-		JSONArray result = root.getJSONArray("result");// result value that is list
-		System.out.println(result);
-		
-		return "Successfully Inserted";
-//		return "";
+		return "fine";
 	}
 
 	@Override

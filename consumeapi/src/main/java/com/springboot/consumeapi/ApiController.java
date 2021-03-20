@@ -35,6 +35,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestOperations;
 import org.springframework.web.client.RestTemplate;
@@ -54,7 +55,7 @@ import org.json.JSONObject ;
 //@RequestMapping("/api")
 public class ApiController {
 	
-	
+	@Autowired
 	private ServiceClass serviceclass;
 //	private EntityManager entityManager;
 
@@ -65,23 +66,25 @@ public class ApiController {
 	}
 	
 	@GetMapping("/employees/{empId}")
-	public void GetById(@PathVariable String empId) throws JSONException {
-		 serviceclass.findById(empId);
+	public String GetById(@PathVariable String empId) throws JSONException {
+		 return serviceclass.findById(empId);
 			}
 	
-	@PostMapping("/employees")
-	public String updateEmployee(@RequestBody String theEmployee) throws JSONException {
+	@RequestMapping(value="/employees",method=RequestMethod.POST)
+	public String update(@RequestBody  Map<String, Object> theEmployee) throws JSONException {
+		return serviceclass.update(theEmployee);
+//		return new JSONObject().put("test",theEmployee).toString();
+//		return theEmployee.toString();
+//		 return serviceclass.update(theEmployee);
 		
-		 serviceclass.update(theEmployee);
-		return  theEmployee;
 	}
 	
-	@PutMapping("/employees") //update the record
-	public String updateEmployeebyPut(@RequestBody String theEmployee) throws JSONException {
-			
-		 serviceclass.update(theEmployee);
-			return "Updated";
-		}
+//	@PutMapping("/employees") //update the record
+//	public String updateEmployeebyPut(@RequestBody String theEmployee) throws JSONException {
+//			
+//		 serviceclass.update(theEmployee,id);
+//			return "Updated";
+//		}
 	
 //	add mapping for DELETE /employee/{employeeId}  delete employee
 	@DeleteMapping("/employees/{empId}")

@@ -2,6 +2,7 @@ package com.springboot.consumeapi.service;
 
 import java.net.URI;
 import java.util.Iterator;
+import java.util.Map;
 
 //import javax.transaction.Transactional;
 
@@ -15,10 +16,13 @@ import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
+//import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Base64Utils;
 import org.springframework.web.client.RestTemplate;
 
-import DAOclass.DAOClass;
+import com.springboot.consumeapi.DAOclass.DAOClass;
+//import org.springframework.transaction.annotation.Transactional;
+//import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class ServiceClass implements services {
@@ -39,14 +43,18 @@ public class ServiceClass implements services {
 	}
 
 	@Override
-	public void findById(String empId) throws JSONException {
+	public String findById(String empId) throws JSONException {
 		 daoclass.findById(empId);
+		 return "Service called by unique ";
 	}
 
 	@Override
-	public void update(String theEmployee) throws JSONException {
+//	@Transactional
+	public String update(Map<String, Object> theEmployee) throws JSONException {
 
-		 daoclass.update(theEmployee);
+		return  daoclass.update(theEmployee);
+//		 return "Update method called";
+		 
 	}
 
 	@Override
