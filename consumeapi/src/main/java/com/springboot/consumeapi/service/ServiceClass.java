@@ -37,8 +37,8 @@ public class ServiceClass implements services {
 
 	@Override
 	public String findAll() throws JSONException {
-		 daoclass.findAll();
-		 return "Service called";
+		return daoclass.findAll();
+//		 return "Service called";
 
 	}
 
@@ -50,9 +50,18 @@ public class ServiceClass implements services {
 
 	@Override
 //	@Transactional
-	public String update(Map<String, Object> theEmployee) throws JSONException {
+	public String insert(Map<String, Object> theEmployee) throws JSONException {
 
-		return  daoclass.update(theEmployee);
+		return  daoclass.insert(theEmployee);
+//		 return "Update method called";
+		 
+	}
+	
+	@Override
+//	@Transactional
+	public String update(Map<String, Object> theEmployee,String id) throws JSONException {
+
+		return  daoclass.update(theEmployee,id);
 //		 return "Update method called";
 		 
 	}
